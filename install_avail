@@ -1,0 +1,128 @@
+Dưới đây là phiên bản đã chỉnh sửa của hướng dẫn cài đặt và chạy Avail Node:
+
+markdown
+Copy code
+# Hướng Dẫn Cài Đặt và Chạy Avail Node
+
+**Bước 1: Cài Đặt Rust và Các Phụ Thuộc**
+
+Trước hết, cập nhật danh sách gói:
+```bash
+sudo apt-get update
+Cài đặt các công cụ và phần mềm cần thiết bằng các lệnh sau:
+
+bash
+Copy code
+sudo apt install build-essential
+sudo apt install --assume-yes git clang curl libssl-dev protobuf-compiler
+Sau đó, cài đặt Rust bằng lệnh script chính thức:
+
+bash
+Copy code
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source ~/.cargo/env
+Chọn phiên bản Rust mặc định là "stable":
+
+bash
+Copy code
+rustup default stable
+Cập nhật Rust và thêm target "wasm32-unknown-unknown" cho phiên bản "nightly":
+
+bash
+Copy code
+rustup update
+rustup update nightly
+rustup target add wasm32-unknown-unknown --toolchain nightly
+Bước 2: Clone và Chạy Avail Node
+
+Clone mã nguồn của Avail từ GitHub bằng lệnh sau:
+
+bash
+Copy code
+git clone https://github.com/availproject/avail.git
+cd avail
+Tạo các thư mục "output" và "data" cho Avail Node:
+
+bash
+Copy code
+mkdir -p output
+mkdir -p data
+Kiểm tra mã nguồn Avail tại phiên bản cụ thể (ví dụ: v1.7.2) bằng lệnh sau:
+
+bash
+Copy code
+git checkout v1.7.2
+Biên dịch và chạy Avail Node với các tham số cụ thể:
+
+bash
+Copy code
+cargo run --locked --release -- --chain kate -d ./output
+Thông tin về quá trình khởi chạy Avail Node sẽ được hiển thị trên màn hình.
+
+Bước 3: Tạo Dịch Vụ systemd
+
+Tạo một tệp dịch vụ systemd cho Avail Node:
+
+bash
+Copy code
+touch /etc/systemd/system/availd.service
+Sử dụng trình soạn thảo văn bản (ví dụ: nano) để chỉnh sửa tệp dịch vụ:
+
+bash
+Copy code
+nano /etc/systemd/system/availd.service
+Chỉnh sửa các thông số trong tệp dịch vụ, bao gồm tên của Validator (ví dụ: "Dinhcongtac221") và tùy chọn khởi động lại (nếu cần):
+
+bash
+Copy code
+[Unit]
+Description=Avail Validator
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+User=root
+ExecStart=/root/avail/target/release/data-avail --base-path `pwd`/data --chain kate --name "Dinhcongtac221"
+Restart=always
+RestartSec=120
+
+[Install]
+WantedBy=multi-user.target
+Lưu và đóng trình soạn thảo văn bản.
+
+Bước 4: Kích Hoạt Khởi Động Tự Động
+
+Kích hoạt dịch vụ để tự động khởi động khi hệ thống khởi động lại:
+
+bash
+Copy code
+systemctl enable availd.service
+Bước 5: Khởi Chạy Thủ Công
+
+Khởi động dịch vụ Avail Node thủ công bằng lệnh sau:
+
+bash
+Copy code
+systemctl start availd.service
+Bước 6: Kiểm Tra Trạng Thái
+
+Kiểm tra trạng thái của dịch vụ Avail Node:
+
+bash
+Copy code
+systemctl status availd.service
+Bước 7: Xem Log
+
+Xem log của Avail Node bằng lệnh journalctl:
+
+bash
+Copy code
+journalctl -f -u availd
+Bước 8: Kiểm Tra Node Trên Trang Web Avail Telemetry
+
+Bạn có thể kiểm tra trạng thái của node trên trang web telemetry của Avail tại địa chỉ: https://telemetry.avail.tools/
+
+css
+Copy code
+
+Hướng dẫn này sẽ giúp bạn cài đặt và chạy Avail Node trên hệ thống Linux của 
