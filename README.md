@@ -58,7 +58,7 @@ Trên màn hình sẽ hiển thị thông tin về việc khởi chạy Avail No
 touch /etc/systemd/system/availd.service
 
 **Chỉnh sửa các thông số trong tệp dịch vụ, bao gồm tên của Validator (VD: "nobita") và tùy chọn khởi động lại (nếu cần):**
-
+**
 [Unit] 
 Description=Avail Validator
 After=network.target
@@ -69,7 +69,7 @@ ExecStart= /root/avail/target/release/data-avail --base-path `pwd`/data --chain 
 Restart=always 
 RestartSec=120
 [Install] 
-WantedBy=multi-user.target
+WantedBy=multi-user.target**
 
 
 Lưu và đóng trình soạn thảo văn bản.
