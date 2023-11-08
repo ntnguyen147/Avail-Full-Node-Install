@@ -6,8 +6,8 @@ RAM	4GB	8GB
 CPU (amd64/x86 architecture)	2 core	4 core
 Storage (SSD)	20-40 GB	200-300 GB
 
-1.** Install Rust**
-
+**1.** Install Rust**
+**
 sudo apt-get update
 sudo apt install build-essential
 sudo apt install --assume-yes git clang curl libssl-dev protobuf-compiler
@@ -17,7 +17,9 @@ rustup default stable
 rustup update
 rustup update nightly
 rustup target add wasm32-unknown-unknown --toolchain nightly
-2.After ensuring you have Rust installed, you can run the Avail Node using the following command:
+
+
+**2.After ensuring you have Rust installed, you can run the Avail Node using the following command:**
 
 git clone https://github.com/availproject/avail.git
 cd avail
