@@ -59,19 +59,18 @@ touch /etc/systemd/system/availd.service
 
 **Chỉnh sửa các thông số trong tệp dịch vụ, bao gồm tên của Validator (VD: "nobita") và tùy chọn khởi động lại (nếu cần):**
 
-[Unit]
+[Unit] 
 Description=Avail Validator
 After=network.target
 StartLimitIntervalSec=0
-
-[Service]
-User=root
-ExecStart=/root/avail/target/release/data-avail --base-path `pwd`/data --chain kate --name "nobita"
-Restart=always
+[Service] 
+User=root 
+ExecStart= /root/avail/target/release/data-avail --base-path `pwd`/data --chain kate --name "nobita"
+Restart=always 
 RestartSec=120
-
-[Install]
+[Install] 
 WantedBy=multi-user.target
+
 
 Lưu và đóng trình soạn thảo văn bản.
 
